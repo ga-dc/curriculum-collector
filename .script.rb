@@ -42,19 +42,26 @@ repos.each do |repo|
   repo[:path] = path.dup
 end
 
-puts "date"
-puts "rm -rf #{target_folder}"
-puts "mkdir #{target_folder}"
+if !(Dir.exists? target_folder)
+  puts "mkdir #{target_folder}"
+end
+puts "ROOT_DIR=$(pwd)"
 repos.each do |repo|
   puts "#"
+  puts "echo '...#{repo[:title]}...'"
+  path = repo[:path].join("/")
+  is_new_dir = !(Dir.exists?(path))
+  if is_new_dir
+    puts "mkdir #{path}"
+  end
   if repo[:url]
-    base = repo[:url].match(/(?<=\/)[\w-]+$/){|m| m.to_s}
-    parent = repo[:path][0..-2].join("/")
-    puts "curl -s --location #{repo[:url]}/archive/master.zip > #{base}.zip"
-    puts "unzip #{base}.zip"
-    puts "rm #{base}.zip"
-    puts "mv #{base}-master/ #{repo[:path].join("/")}/"
-  else
-    puts "mkdir #{repo[:path].join("/")}"
+    puts "cd #{path}"
+    if is_new_dir
+      puts "git clone #{repo[:url]} ."
+    else
+      puts "git fetch"
+      puts "git reset --hard origin/master"
+    end
+    puts "cd $ROOT_DIR"
   end
 end
