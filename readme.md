@@ -15,6 +15,12 @@ INPUT_URL="https://raw.githubusercontent.com/ga-dc/wdi8/master/scope-and-sequenc
 TARGET_FOLDER="curriculum"
 ```
 
+Then, run:
+
+```
+$ sh RUN-ME.sh
+```
+
 ## What it should look like
 
 If that `scope-and-sequence` document looks like this:
