@@ -1,6 +1,6 @@
 # Curriculum Collector
 
-This Shell/Ruby trawls through a markdown outline and clones down all the repos referenced in it.
+This Shell/Ruby trawls through the `scope-and-sequence.md` file and clones down all the repos referenced in it.
 
 If the repos are already cloned, then it executes `git reset --hard origin/master` for each one.
 
@@ -8,14 +8,7 @@ If the repos are already cloned, then it executes `git reset --hard origin/maste
 
 ## Instructions
 
-Create a file called `config.sh` and inside it put the following:
-
-```
-INPUT_URL="https://raw.githubusercontent.com/ga-dc/wdi8/master/scope-and-sequence.md"
-TARGET_FOLDER="curriculum"
-```
-
-Then, run:
+If desired, make tweaks to the `.config.sh` file. Then:
 
 ```
 $ sh RUN-ME.sh
@@ -23,7 +16,7 @@ $ sh RUN-ME.sh
 
 ## What it should look like
 
-If that `scope-and-sequence` document looks like this:
+If the `scope-and-sequence.md` document looks like this:
 
 ```md
 # Scope and Sequence
