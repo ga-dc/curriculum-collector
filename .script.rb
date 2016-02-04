@@ -59,8 +59,7 @@ repos.each do |repo|
     if is_new_dir
       puts "git clone #{repo[:url]} ."
     else
-      puts "git fetch"
-      puts "git reset --hard origin/master"
+      puts "git pull origin master"
     end
     puts "cd $ROOT_DIR"
   end

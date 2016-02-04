@@ -2,9 +2,7 @@
 
 This Shell/Ruby trawls through the `scope-and-sequence.md` file and clones down all the repos referenced in it.
 
-If the repos are already cloned, then it executes `git reset --hard origin/master` for each one.
-
-> (It does this instead of `git pull origin master` to control for the possibility of the remote repo having been rebased or force-pushed.)
+If the repos are already cloned, then it executes `git pull origin master` for each one.
 
 ## Instructions
 
