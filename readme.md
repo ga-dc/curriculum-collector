@@ -6,7 +6,7 @@ If the repos are already cloned, then it executes `git pull origin master` for e
 
 ## Instructions
 
-If desired, make tweaks to the `.config.sh` file. Then:
+Create a `.config.sh` file. Provided for you is `.sample.config.sh`; just remove the `sample.`. Then:
 
 ```
 $ sh RUN-ME.sh
