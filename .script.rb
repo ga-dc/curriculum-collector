@@ -2,6 +2,7 @@ require "httparty"
 
 input_url = ARGV[0]
 target_folder = ARGV[1]
+https_or_ssh = ARGV[2]
 
 rx = {
   looks_like_prose: /(^[a-zA-Z])|(^\#[^\#])|(^[0-9][^\.])/,
@@ -11,7 +12,9 @@ rx = {
   non_alphanum: /[^a-z0-9\-\s]/,
   mult_hyphens: /-{1,}/,
   final_slash: /\/{1,}$/,
-  blank: /^\s*$/
+  blank: /^\s*$/,
+  org: /(?<=github.com\/).*?(?=\/)/,
+  raw_title: /(?<=\/)[a-zA-Z0-9\-\_]*?$/
 }
 
 levels = []
@@ -20,15 +23,22 @@ HTTParty.get(input_url).split(/[\n\r]/).each do |line|
   next if (line =~ rx[:blank] || line =~ rx[:looks_like_prose])
   level = line.size - line.lstrip.size
   levels.push(level)
-  url = line.match(rx[:url]){|m| m.to_s}
-  if url then url.gsub!(rx[:final_slash], "") end
   title = line.gsub(rx[:url], "").strip
   title = line.match(rx[:url_title]){|m| m.to_s} || line.gsub(rx[:newline_punct], "")
   title = title.downcase.strip
   title.gsub!(rx[:non_alphanum], "")
   title.gsub!(/\s/, "-")
   title.gsub!(rx[:mult_hyphens], "-")
-  repos.push({level: level, title: title, url: url, raw: line})
+  url = line.match(rx[:url]){|m| m.to_s}
+  if url
+    url.gsub!(rx[:final_slash], "")
+    owner = url.match(rx[:org]){|m| m.to_s}
+    raw_title = url.match(rx[:raw_title]){|m| m.to_s}
+    ssh = "git@github.com:#{owner}/#{raw_title}.git"
+  else
+    ssh = nil
+  end
+  repos.push({level: level, title: title, url: url, raw: line, ssh: ssh})
 end
 
 path = [target_folder]
@@ -57,7 +67,11 @@ repos.each do |repo|
   if repo[:url]
     puts "cd #{path}"
     if is_new_dir
-      puts "git clone #{repo[:url]} ."
+      if https_or_ssh == "ssh"
+        puts "git clone #{repo[:ssh]}"
+      else
+        puts "git clone #{repo[:url]}"
+      end
     else
       puts "git pull origin master"
     end
