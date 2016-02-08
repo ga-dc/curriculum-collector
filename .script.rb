@@ -68,9 +68,9 @@ repos.each do |repo|
     puts "cd #{path}"
     if is_new_dir
       if https_or_ssh == "ssh"
-        puts "git clone #{repo[:ssh]}"
+        puts "git clone #{repo[:ssh]} ."
       else
-        puts "git clone #{repo[:url]}"
+        puts "git clone #{repo[:url]} ."
       end
     else
       puts "git pull origin master"
