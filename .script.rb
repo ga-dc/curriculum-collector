@@ -67,6 +67,15 @@ repos.each do |repo|
   if repo[:url]
     puts "cd #{path}"
     if is_new_dir
+=begin
+Alright. So. This prevents homework being pushed up as a submodule inside each lesson plan.
+It appends the homework's folder to the .gitignore of the lesson plan, and also makes the
+.gitignore ignore itself. Therefore, a user who pushes changes to the lesson plan
+will not push up the homework as a submodule, nor the changes to the .gitignore. So this
+only affects things locally.
+=end
+      puts "echo '#{repo[:title]}/' >> ../.gitignore"
+      puts "echo '.gitignore' >> ../.gitignore"
       if https_or_ssh == "ssh"
         puts "git clone #{repo[:ssh]} ."
       else
