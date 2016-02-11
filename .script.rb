@@ -82,6 +82,7 @@ only affects things locally.
         puts "git clone #{repo[:url]} ."
       end
     else
+      puts "git checkout master"
       puts "git pull origin master"
     end
     puts "cd $ROOT_DIR"
