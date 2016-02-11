@@ -83,7 +83,8 @@ only affects things locally.
       end
     else
       puts "git checkout master"
-      puts "git pull origin master"
+      puts "git fetch"
+      puts "git reset --hard origin/master"
     end
     puts "cd $ROOT_DIR"
   end
