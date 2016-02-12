@@ -1,4 +1,4 @@
-require "httparty"
+require "net/http"
 
 input_url = ARGV[0]
 target_folder = ARGV[1]
@@ -19,7 +19,7 @@ rx = {
 
 levels = []
 repos = []
-HTTParty.get(input_url).split(/[\n\r]/).each do |line|
+Net::HTTP.get(URI(input_url)).split(/[\n\r]/).each do |line|
   next if (line =~ rx[:blank] || line =~ rx[:looks_like_prose])
   level = line.size - line.lstrip.size
   levels.push(level)
