@@ -12,6 +12,12 @@ Create a `.config.sh` file. Provided for you is `.sample.config.sh`; just remove
 $ sh RUN-ME.sh
 ```
 
+To do a "dry run", so that you can see the commands being generated without actually running them:
+
+```
+$ sh RUN-ME.sh dry
+```
+
 ## What it should look like
 
 If the `scope-and-sequence.md` document looks like this:
